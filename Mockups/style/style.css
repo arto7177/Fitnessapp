@@ -2,7 +2,11 @@ body{
 	background:#EEFFFF !important;
 }
 
-
+.form-control-inline {
+	min-width: 0;
+    width: auto;
+    display: inline;
+}
 .loginarea{
 	width: 450px;
 	
