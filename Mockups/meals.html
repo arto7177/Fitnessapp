@@ -39,8 +39,131 @@
 		</nav>
 		<div class="container">
 			<div class="row">
-				<table class=""
-		
+				<div class="col-md-7">
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#week">This Week</a></li>
+							<li><a data-toggle="tab" href="#month">This Month</a></li>
+							<li><a data-toggle="tab" href="#year">This Year</span></a></li>
+						</ul>
+						<div class="tab-content">
+						<div id="week" class="tab-pane fade in active">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Day</th>
+										<th>Calories</th>
+									</tr>
+								</thead>
+								<tr>
+									<td>Monday</td>
+									<td>1800</td>
+
+								</tr>
+								<tr>
+									<td>Tuesday</td>
+									<td>2000</td>
+
+								</tr>
+								<tr>
+									<td>Wednesday</td>
+									<td>1900</td>
+
+								</tr>
+								<tr>
+									<td>Thurdsay</td>
+									<td>2200</td>
+
+								</tr>
+							</table>				
+						</div>
+						<div id="month" class="tab-pane fade">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Week</th>
+										<th>Calories</th>
+									</tr>
+								</thead>
+								<tr>
+									<td>1</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>2</td>
+								</tr>
+							</table>
+						</div>
+						<div id="year" class="tab-pane fade">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Month</th>
+										<th>Calories</th>
+
+									</tr>
+								</thead>
+								<tr>
+									<td>January</td>
+									<td>0</td>
+
+								</tr>
+								<tr>
+									<td>February</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>March</td>
+									<td>3</td>
+
+								</tr>
+							</table>						
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<h3 class="text-center">Add Meal</h3>
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label">Calories:</label>
+							<input type="number" class="form-control form-control-inline" placeholder="300">
+						</div>
+						To estimate a meal click <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#mealcalc">Here</button>
+						<div class="form-group">
+							<label class="control-label">Date:</label>
+							<input type="date" class="form-control form-control-inline" placeholder="MM/DD/YYYY">
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary">Add <span class="glyphicon glyphicon-plus"></button
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="mealcalc" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Meal Calculator</h4>
+					</div>
+					<div class="modal-body">
+					</div>
+					Calculator will go here
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 
