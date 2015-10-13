@@ -14,20 +14,20 @@
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html">Fitness</a>
+					<a class="navbar-brand" href="index.php">Fitness</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="index.html">Home</a>
-						<li><a href="ehist.html">Exercise</a></li>
-						<li><a href="meals.html">Meals</a></li>
-						<li><a href="goals.html">Goal</a></li>
+						<li class="active"><a href="index.php">Home</a>
+						<li><a href="ehist.php">Exercise</a></li>
+						<li><a href="meals.php">Meals</a></li>
+						<li><a href="goals.php">Goal</a></li>
 					</ul>
 					<ul class="nav navbar-nav pull-right">
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings <span class="glyphicon glyphicon-cog"></span></a>
 							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="profile.html">Profile <span class="glyphicon glyphicon-user"></span></a></li>
+								<li><a href="profile.php">Profile <span class="glyphicon glyphicon-user"></span></a></li>
 								<li><a href="#">Account Options <span class="glyphicon glyphicon-edit"></span></a></li>
 								<li class="divider"></li>
 								<li><a href="#">Sign Out <span class="glyphicon glyphicon-log-out"></span></a></li>
