@@ -1,33 +1,32 @@
 <?php
 session_start();
-    $meals = $_SESSION['meals'];
-    if(!$meals){
-      $_SESSION['meals'] = $meals = array(
-          array( 'Day' => 'Monday', Callories => 1800 ),
-          array( 'Day' => 'Tuesday', Callories => 2000 ),
-          array( 'Day' => 'Wednesday', Callories => 1900),
-          array( 'Day' => 'Thursday', Callories => 2200 ),
+    $exercises = $_SESSION['exercises'];
+    if(!$exercises){
+      $_SESSION['exercises'] = $exercises = array(
+          array( 'EType' => 'Running','Date'=>'9/15/2015', Minutes => 40 ),
+          array( 'EType' => 'Swimming', 'Date'=>'9/15/2015',Minutes => 20 ),
+          array( 'EType' => 'Weight Lifting','Date'=>'9/15/2015', Minutes => 30),
+          array( 'EType' => 'Climbing', 'Date'=>'9/15/2015', Minutes => 60 ),
           );
-    }
-        
-    $total = 0;
-    foreach ($meals as $meal) {
-        $total += $meal['Callories'];
-    }
-    
+   }
+	if($_POST){
+		$exercises[] = $_POST;
+	}
+	$_SESSION['exercises']=$exercises;
     
 ?>
 <!DOCTYPE html>
 <html lang=en>
 	<head>
-		<meta charset="utf-8">
+		<meta chasret="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Fitness > Meals</title>
+		
+		<title>Fitness > Exercise</title>
+		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="style/style.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse">
@@ -38,8 +37,8 @@ session_start();
 				<div>
 					<ul class="nav navbar-nav">
 						<li><a href="index.php">Home</a>
-						<li><a href="ehist.php">Exercise</a></li>
-						<li class="active"><a href="meals.php">Meals</a></li>
+						<li class="active"><a href="ehist.php">Exercise</a></li>
+						<li><a href="meals.php">Meals</a></li>
 						<li><a href="goals.php">Goal</a></li>
 					</ul>
 					<ul class="nav navbar-nav pull-right">
@@ -70,21 +69,20 @@ session_start();
 								<table class="table table-bordered">
 									<thead>
 										<tr>
-											<th>Day</th>
-											<th>Calories</th>
+											<th>Exercise Type</th>
+											<th>Date</th>
+											<th>Minutes</th>
 										</tr>
 									</thead>
-									<?php foreach($meals as $i => $meal): ?>
+									<?php foreach($exercises as $i => $exercise): ?>
 
 										<tr>
-											<td><?=$meal['Day']?></td>
-                 							<td><?=$meal['Callories']?></td>
+											<td><?=$exercise['EType']?></td>
+											<td><?=$exercise['Date']?></td>
+                 							<td><?=$exercise['Minutes']?></td>
                  							<td>
-                 								<div class="btn-group" role="group" aria-label="...">
-				                     				<a href="" title="View" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a>
-				                     				<a href="edit.php?id=<?=$i?>" title="Edit" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
-				                      				<a href="delete.php?id=<?=$i?>" title="Delete" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
-			                    				</div>
+			                     				<a href="ehistedit.php?id=<?=$i?>" title="Edit" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+			                      				<a href="ehistdel.php?id=<?=$i?>" title="Delete" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></a>
                  							</td>
 										</tr>
 									<?php endforeach; ?>
@@ -96,24 +94,10 @@ session_start();
 									<thead>
 										<tr>
 											<th>Week</th>
-											<th>Calories</th>
+											<th>Minutes</th>
 										</tr>
 									</thead>
-									<tr>
-										<td>1</td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>5</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>3</td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td>2</td>
+
 									</tr>
 								</table>
 							</div>
@@ -122,24 +106,10 @@ session_start();
 									<thead>
 										<tr>
 											<th>Month</th>
-											<th>Calories</th>
+											<th>Minutes</th>
 
 										</tr>
 									</thead>
-									<tr>
-										<td>January</td>
-										<td>0</td>
-
-									</tr>
-									<tr>
-										<td>February</td>
-										<td>5</td>
-									</tr>
-									<tr>
-										<td>March</td>
-										<td>3</td>
-
-									</tr>
 								</table>						
 							</div>
 						</div>
@@ -147,20 +117,41 @@ session_start();
 				</div>
 				<div class="col-md-5">
 					<div class="cardbg">
-						<h3 class="text-center">Add Meal</h3>
-						<form class="center">
+						<h3 class="text-center">Add Exercise</h3>
+						<form class="form-horizontal" action="" method="post">
 							<div class="form-group">
-								<label class="control-label">Calories:</label>
-								<input type="number" class="form-control form-control-inline" placeholder="300">
+								<label class="control-label col-xs-3">Exercise Type:</label>
+								<div class="col-xs-9"> 
+									<select class="form-control" name="EType">
+								    	<option>Running</option>
+								      	<option>Climbing</option>
+								      	<option>Swimming</option>
+								    	<option>Weight Lifting</option>
+								  	</select>
+								 </div>
+
 							</div>
-							To estimate a meal click <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#mealcalc">Here</button>
 							<div class="form-group">
-								<label class="control-label">Date:</label>
-								<input type="date" class="form-control form-control-inline" placeholder="MM/DD/YYYY">
+								<label class="control-label col-xs-3">Minutes:</label>
+								<div class="col-xs-9">
+									<input type="number" class="form-control" id="txtMinutes" name="Minutes" placeholder="Minutes exercising"  value="<?=$newmeal['Minutes']?>">
+								</div>
 							</div>
 							<div class="form-group">
-								<button class="btn btn-primary">Add <span class="glyphicon glyphicon-plus"></button>
+								<label class="control-label col-xs-3">Date:</label>
+								<div class="col-xs-9">
+									<input type="text" class="form-control date" id="txtDate" name="Date" placeholder=""  value="<?=$newmeal['Date']?>">
+								</div>
 							</div>
+							<div class="form-group">
+								
+								<div class='col-xs-offset-3 col-xs-9'>
+									<button type=submit class="btn btn-primary">Add <span class="glyphicon glyphicon-plus"></button>
+									<button type="reset" class='btn btn-danger'>Cancel</button>
+								</div>
+							</div>
+						
+						
 						</form>
 					</div>
 				</div>
@@ -168,7 +159,6 @@ session_start();
 		</div>
 		<div id="mealcalc" class="modal fade" role="dialog">
 			<div class="modal-dialog">
-
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -183,6 +173,19 @@ session_start();
 				</div>
 			</div>
 		</div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	    <script type="text/javascript">
+	    	(function($){
+        		$(function(){
+        			 
+        			$("#txtDate" ).datepicker();
+        		});
+	    	})(jQuery);
+	    </script>
 	</body>
 </html>
 
