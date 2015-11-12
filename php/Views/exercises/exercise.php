@@ -15,20 +15,22 @@
             <table class="table table-bordered">
             	<thead>
             		<tr>
-            			<th>Meal</th>
+            			<th>Exercise</th>
             			<th>Date</th>
-            			<th>Callories</th>
+            			<th>Calories</th>
+            			<th>Minutes</th>
             		</tr>
             	</thead>
-            	<?php foreach($meals as $meal): ?>
+            	<?php foreach($exercises as $exercise): ?>
             		<tr>
-            			<td><?=$meal['mealname']?></td>
-            			<td><?=$meal['date']?></td>
-             			<td><?=$meal['calories']?></td>
+            			<td><?=$exercise['exercisename']?></td>
+            			<td><?=$exercise['date']?></td>
+             			<td><?=$exercise['calories']?></td>
+             			<td><?=$exercise['minutes']?></td>
              			<td> 
-             				<a href="?action=edit&id=<?=$meal['id']?>" title="Edit" class="btn btn-primary btn-sm ajax"><i class="glyphicon glyphicon-edit"></i></a>
-              				<A href="?action=view&id=<?=$meal['id']?>" title="View" class="btn btn-info btn-sm ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
-              				<a href="?action=delete&id=<?=$meal['id']?>" title="Delete" class="btn btn-danger btn-sm ajax"><i class="glyphicon glyphicon-minus"></i></a>
+             				<a href="?action=edit&id=<?=$exercise['id']?>" title="Edit" class="btn btn-primary btn-sm ajax"><i class="glyphicon glyphicon-edit"></i></a>
+              				<A href="?action=view&id=<?=$exercise['id']?>" title="View" class="btn btn-info btn-sm ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
+              				<a href="?action=delete&id=<?=$exercise['id']?>" title="Delete" class="btn btn-danger btn-sm ajax"><i class="glyphicon glyphicon-minus"></i></a>
              			</td>
             		</tr>
             	<?php endforeach; ?>
@@ -42,31 +44,36 @@
                 <div class="form-group">
             		<label class="control-label col-xs-3">Meal:</label>
             		<div class="col-xs-7"> 
-            			<select class="form-control" name="mealname">
-            		    	<option <?php if($meals['mealname'] == 'Breakfast') echo"selected"; ?>>Breakfast</option>
-            		      	<option <?php if($meals['mealname'] == 'Lunch') echo"selected"; ?>>Lunch</option>
-            		      	<option <?php if($meals['mealname'] == 'Dinner') echo"selected"; ?>>Dinner</option>
-            		    	<option <?php if($meals['mealname'] == 'Snack') echo"selected"; ?>>Snack</option>
+            			<select class="form-control" name="exercisename">
+            		    	<option <?php if($exercises['exercisename'] == 'Running') echo"selected"; ?>>Running</option>
+            		      	<option <?php if($exercises['exercisename'] == 'Swimming') echo"selected"; ?>>Swimming</option>
+            		      	<option <?php if($exercises['exercisename'] == 'Climbing') echo"selected"; ?>>Climbing</option>
+            		    	<option <?php if($exercises['exercisename'] == 'Weight Lifting') echo"selected"; ?>>Weight Lifting</option>
             		  	</select>
             		 </div>
             	</div>
             	<div class="form-group">
             		<label class="control-label col-xs-3">Calories:</label>
             		<div class='col-xs-7'>
-            			<input type="number" name="calories" class="form-control" placeholder"Calories" value="<?=$meals['calories']?>"/>
+            			<input type="number" name="calories" class="form-control" placeholder"0" value="<?=$exercises['calories']?>"/>
             		</div>
             	</div>
-            
+            <div class="form-group">
+            		<label class="control-label col-xs-3">Minutes:</label>
+            		<div class='col-xs-7'>
+            			<input type="number" name="minutes" class="form-control" placeholder"0" value="<?=$exercises['minutes']?>"/>
+            		</div>
+            	</div>
             	<div class="form-group">
             			<label class="control-label col-xs-3">Date:</label>
             			<div class="col-xs-7">
-            				<input type="text" name="date" id="txtDate" class="form-control" placeholder="Date" value="<?=$meals['date']?>" />
+            				<input type="text" name="date" id="txtDate" class="form-control" placeholder="Date" value="<?=$exercises['date']?>" />
             			</div>
             		</div>
             	<div class="form-group">
             		<div class='col-xs-offset-3 col-xs-9'>
             			<button type='submit' value="Save" class="btn btn-primary"><small><span class="glyphicon glyphicon-plus"></small> Add</button>
-            			<input type="hidden" name="id" value="<?=$meals['id']?>" />
+            			<input type="hidden" name="id" value="<?=$exercises['id']?>" />
             		</div>
             	</div>
             </form>
