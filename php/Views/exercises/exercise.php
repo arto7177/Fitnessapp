@@ -40,10 +40,10 @@
     </div>
     <div class="col-md-5">
     	<div class="cardbg">
-    		<h3 class="text-center">Add Meal</h3>
+    		<h3 class="text-center">Add Exercise</h3>
     		<form class="form-horizontal" method="post" action="?action=save">
                 <div class="form-group">
-            		<label class="control-label col-xs-3">Meal:</label>
+            		<label class="control-label col-xs-3">Exercise:</label>
             		<div class="col-xs-7"> 
             			<select class="form-control" name="exercisename">
             		    	<option <?php if($exercises['exercisename'] == 'Running') echo"selected"; ?>>Running</option>
