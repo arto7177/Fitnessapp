@@ -57,10 +57,6 @@ class Exercise {
 					(exercisename, date, created,calories,minutes)
 					VALUES ('$row2[exercisename]', '$row2[date]', Now() , '$row[calories]', '$row[minutes]')";				
 		}
-		
-		
-		//my_print( $sql );
-		
 		$results = $conn->query($sql);
 		$error = $conn->error;
 		

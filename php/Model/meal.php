@@ -19,7 +19,6 @@ class Meal {
 	{
 		$conn = GetConnection();
 		$sql = "DELETE FROM meals WHERE id = $id";
-		//echo $sql;
 		$results = $conn->query($sql);
 		$error = $conn->error;
 		$conn->close();
@@ -57,9 +56,6 @@ class Meal {
 					(mealname, date, created,calories)
 					VALUES ('$row2[mealname]', '$row2[date]', Now() , $row[calories]) ";				
 		}
-		
-		
-		//my_print( $sql );
 		
 		$results = $conn->query($sql);
 		$error = $conn->error;

@@ -21,7 +21,7 @@
 	<div class="form-group">
 		<label class="control-label col-xs-3">Minutes:</label>
 		<div class='col-xs-7'>
-			<input type="number" name="minutes" class="form-control" placeholder"Minutes" value="<?=$exercises['minutes']?>"/>
+			<input type="number" name="minutes2" class="form-control" placeholder"Minutes" value="<?=$exercises['minutes']?>"/>
 		</div>
 	</div>
 	<div class="form-group">

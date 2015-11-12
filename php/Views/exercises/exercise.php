@@ -1,4 +1,5 @@
 <?php
+    $today=getdate();
 ?>
 
 <div class="modal fade" id="myDialog">
@@ -55,19 +56,26 @@
             	<div class="form-group">
             		<label class="control-label col-xs-3">Calories:</label>
             		<div class='col-xs-7'>
-            			<input type="number" name="calories" class="form-control" placeholder"0" value="<?=$exercises['calories']?>"/>
+            			<input type="number" name="calories" class="form-control" value=0 />
             		</div>
             	</div>
                 <div class="form-group">
 	               	<label class="control-label col-xs-3">Minutes:</label>
 	               	<div class='col-xs-7'>
-        			    <input type="number" name="minutes" class="form-control" placeholder"Minutes" value="<?=$exercises['minutes']?>"/>
+        			    <input type="number" name="minutes" class="form-control" value=0 />
             		</div>
             	</div>
             	<div class="form-group">
             			<label class="control-label col-xs-3">Date:</label>
             			<div class="col-xs-7">
-            				<input type="text" name="date" id="txtDate" class="form-control" placeholder="Date" value="<?=$exercises['date']?>" />
+
+            				<input type="text" name="date" id="txtDate" class="form-control" value="<?php
+            				echo $today['year'];
+            				echo "-";
+            				echo $today['mon'];
+            				echo "-";
+            				echo $today['mday'];
+            				?>" />
             			</div>
             		</div>
             	<div class="form-group">
