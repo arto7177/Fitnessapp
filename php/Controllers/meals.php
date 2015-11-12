@@ -1,5 +1,5 @@
 <?php
-    include_once '../model/meal.php';
+    include_once '../Model/meal.php';
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 $method = $_SERVER['REQUEST_METHOD'];
@@ -26,7 +26,6 @@ switch ($action . '_' . $method) {
 				}
 				die();
 			}else{
-
 				$meals = $_REQUEST;
 				$view = "meals/edit.php";		
 			}
@@ -53,7 +52,7 @@ switch ($action . '_' . $method) {
 		$meals = Meal::Search($_REQUEST['q']);
 		$view = 'meals/meal.php';		
 		break;
-	case 'index_GET':
+	case 'meal_GET':
 	default:
 		$meals = Meal::Get();
 		$view = 'meals/meal.php';		
@@ -65,11 +64,11 @@ switch ($format) {
 		echo json_encode($meals);
 		break;
 	case 'plain':
-		include __DIR__ . "/../views/$view";		
+		include __DIR__ . "/../Views/$view";		
 		break;		
 	case 'web':
 	default:
-		include __DIR__ . "/../views/shared/_Template.php";		
+		include __DIR__ . "/../Views/shared/_Template.php";		
 		break;
 }
 

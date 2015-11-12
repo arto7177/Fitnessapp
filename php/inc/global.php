@@ -3,14 +3,17 @@ ini_set('display_errors', 1);
 date_default_timezone_set("America/New_York");
 
 function GetConnection(){
-	$sql_password='7177';
+	include 'password.php';
 	return new mysqli('localhost','arto',$sql_password,'fitnessdb');
 }
+
 function my_print($x){
-    echo '<pre>';
-    print_r($x);
-    echo '</pre>';
+	echo '<pre>';
+	print_r($x);
+	echo '</pre>';
 }
+
+
 function FetchAll($sql){
 		$ret = array();
 		$conn = GetConnection();
