@@ -41,9 +41,6 @@
 		</nav>			
 		<div class="container">
 			<?php include __DIR__ . "/../$view"; ?>
-				
-	
-	
 		</div>
 	</body>
 </html>

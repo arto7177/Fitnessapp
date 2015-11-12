@@ -27,7 +27,7 @@
              			<td><?=$meal['calories']?></td>
              			<td> 
              				<a href="?action=edit&id=<?=$meal['id']?>" title="Edit" class="btn btn-primary btn-sm ajax"><i class="glyphicon glyphicon-edit"></i></a>
-              				<A href="?action=view&id=<?$=$meal['id']?>" title="View" class="btn btn-info btn-sm ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
+              				<A href="?action=view&id=<?=$meal['id']?>" title="View" class="btn btn-info btn-sm ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
               				<a href="?action=delete&id=<?=$meal['id']?>" title="Delete" class="btn btn-danger btn-sm ajax"><i class="glyphicon glyphicon-minus"></i></a>
              			</td>
             		</tr>

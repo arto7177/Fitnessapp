@@ -1,5 +1,5 @@
 
-<form class="form-horizontal" method="post" action="?action=save">
+<form class="form-horizontal" method="post" action="?action=save" >
      <?php include __DIR__ . '/../shared/_Errors.php'; ?>
     <div class="form-group">
 		<label class="control-label col-xs-3">Meal:</label>

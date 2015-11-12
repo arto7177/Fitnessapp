@@ -53,6 +53,10 @@ switch ($action . '_' . $method) {
 		$view = 'meals/meal.php';		
 		break;
 	case 'meal_GET':
+	case 'view_GET':
+		$meals = Meal::Get($_REQUEST['id']);
+		$view = "meals/view.php";		
+		break;
 	default:
 		$meals = Meal::Get();
 		$view = 'meals/meal.php';		

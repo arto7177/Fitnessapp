@@ -18,3 +18,7 @@ body{
 	padding:5px 8px 1px 5px;
 	margin:10px 0px 20px 0px;
 }
+.modal-content {
+	padding-top:10px;
+  background-color: #CCFFFF;
+}

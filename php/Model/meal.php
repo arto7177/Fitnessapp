@@ -36,7 +36,7 @@ class Meal {
 	{
 		$errors = array();
 		if(strtotime($row['date']) > time()) $errors['date'] = "You cannot record a meal from the future";
-		if(!$row['calories'] || $row['calories']<=0) $errors['calories']="You must enter a valid number for Calories";
+		if(!$row['calories'] || $row['calories']<=0 ||is_nan($row['calories'])) $errors['calories']="You must enter a valid number for Calories";
 		return count($errors) > 0 ? $errors : false ;
 
 	}

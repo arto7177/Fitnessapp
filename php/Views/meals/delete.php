@@ -7,11 +7,12 @@
   </div>
   	<div class="modal-body">
         <?php include __DIR__ . '/../shared/_Errors.php'; ?>
-  		<h5>Are you sure you want to delete <?=$meals['mealname']?>?</h5>
+  		<h5>Are you sure you want to delete <?=$meals['mealname']?> on <?=$meals['date']?>?</h5>
   	</div>
 	<div class="modal-footer">
 		<input type="hidden" name="id" value="<?=$meals['id']?>" />
+		<input type="submit" name="submit" class="btn btn-danger" value="Delete" />
 		<a href="?" class="btn btn-default" data-dismiss="modal" >Cancel </a>
-		<input type="submit" name="submit" class="btn btn-primary" value="Save changes" />
+		
 	</div>
 </form>
