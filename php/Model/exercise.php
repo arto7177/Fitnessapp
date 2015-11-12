@@ -54,8 +54,8 @@ class Exercise {
 					";
 		}else{
 			$sql = "INSERT INTO exercises
-					(exercisename, date, created,calories)
-					VALUES ('$row2[exercisename]', '$row2[date]', Now() , $row[calories]) ";				
+					(exercisename, date, created,calories,minutes)
+					VALUES ('$row2[exercisename]', '$row2[date]', Now() , '$row[calories]', '$row[minutes]')";				
 		}
 		
 		
