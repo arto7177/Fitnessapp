@@ -36,6 +36,7 @@ class Exercise {
 		$errors = array();
 		if(strtotime($row['date']) > time()) $errors['date'] = "You cannot record a exercise from the future";
 		if(!$row['calories'] || $row['calories']<=0 ||is_nan($row['calories'])) $errors['calories']="You must enter a valid number for Calories";
+		if(!$row['minutes'] || $row['minutes']<=0 ||is_nan($row['minutes'])) $errors['minutes']="You must enter a valid number for Calories";
 		return count($errors) > 0 ? $errors : false ;
 
 	}
