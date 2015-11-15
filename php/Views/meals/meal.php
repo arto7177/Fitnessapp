@@ -1,12 +1,7 @@
 <?php
 ?>
 
-<div class="modal fade" id="myDialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+q
 
 
 <div class="row">

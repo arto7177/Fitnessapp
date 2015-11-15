@@ -1,0 +1,15 @@
+{
+  "name": "fitness",
+  "version": "1.0.0",
+  "description": "fitness sit in node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arturo Rodriguez-Veve",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "devDependencies": {}
+}
