@@ -4,7 +4,7 @@ module.exports =  {
     blank: function(){ return {} },
     get: function(id, ret){
         var conn = GetConnection();
-        var sql = 'SELECT * FROM meals ';
+        var sql = 'SELECT * FROM exercises ';
         if(id){
           sql += " WHERE id = " + id;
         }
@@ -15,7 +15,7 @@ module.exports =  {
     },
     delete: function(id, ret){
         var conn = GetConnection();
-        conn.query("DELETE FROM meals WHERE id = " + id, function(err,rows){
+        conn.query("DELETE FROM exercises WHERE id = " + id, function(err,rows){
           ret(err);
           conn.end();
         });        
@@ -23,15 +23,16 @@ module.exports =  {
     save: function(row, ret){
         var sql;
         var conn = GetConnection();
+        //  TODO Sanitize
         if (row.id) {
-				  sql = " Update meals "
-							+ " Set mealname=?, date=? ,calories=?,updated=Now()"
+				  sql = " Update exercises "
+							+ " Set exercisename=?, date=? ,calories=? , minutes=?,updated=now()"
 						  + " WHERE id = ? ";
 			  }else{
-				  sql = "INSERT INTO meals (mealname, date, created,calories) VALUES (?, ?, Now() , ?)"			
+				  sql = "INSERT INTO exercises (exercisename, date, created,calories) VALUES (?, ?, Now() , ?)"			
 			  }
 
-        conn.query(sql, [row.mealname, row.date, row.calories,row.id],function(err,data){
+        conn.query(sql, [row.exercisename, row.date, row.calories,row.id],function(err,data){
           if(!err && !row.id){
             row.id = data.insertId;
           }
@@ -42,7 +43,7 @@ module.exports =  {
     validate: function(row){
       var errors = {};
       
-      if(!row.mealname) errors.mealname = "is required"; 
+      if(!row.exercisename) errors.exercisename = "is required"; 
       
       return errors.length ? errors : false;
     }

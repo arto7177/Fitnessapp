@@ -2,7 +2,8 @@ var express = require('express'),
     app = express();
 var bodyParser = require('body-parser');
 var meal = require("./Model/meal");
-var exercise= require("./Model/exercise");
+var exercise = require("./Model/exercise");
+
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -41,7 +42,7 @@ app.get("/meal", function(req, res){
   })
   
 })
-.get("/exercise", function(req, res){
+app.get("/exercise", function(req, res){
   
   exercise.get(null, function(err, rows){
     res.send(rows);
@@ -76,5 +77,6 @@ app.get("/meal", function(req, res){
   })
   
 })
+
 
 app.listen(process.env.PORT);

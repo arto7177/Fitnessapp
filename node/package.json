@@ -1,15 +1,10 @@
 {
-  "name": "fitness",
-  "version": "1.0.0",
-  "description": "fitness sit in node",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Arturo Rodriguez-Veve",
-  "license": "ISC",
+  "name": "suny-node-js",
+  "version": "0.1.0",
+  "description": "",
   "dependencies": {
-    "express": "^4.13.3"
-  },
-  "devDependencies": {}
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mysql": "^2.9.0"
+  }
 }
