@@ -26,15 +26,13 @@ module.exports =  {
         //  TODO Sanitize
         if (row.id) {
 				  sql = " Update meals "
-							+ " Set mealname=?, date=? "
+							+ " Set mealname=?, date=? ,calories=?"
 						  + " WHERE id = ? ";
 			  }else{
-				  sql = "INSERT INTO meals "
-						  + " (mealname, date, created_at) "
-						  + "VALUES (?, ?, Now() ) ";				
+				  sql = "INSERT INTO meals (mealname, date, created,calories) VALUES (?, ?, Now() , ?)"			
 			  }
 
-        conn.query(sql, [row.mealname, row.date, row.id],function(err,data){
+        conn.query(sql, [row.mealname, row.date, row.calories,row.id],function(err,data){
           if(!err && !row.id){
             row.id = data.insertId;
           }
