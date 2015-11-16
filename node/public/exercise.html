@@ -43,7 +43,6 @@
 
     </div>
 
-    <!--      ### Tech Stuff ###      -->
     <div class="modal fade" id="myDialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -59,9 +58,9 @@
         		<input type="submit" name="submit" class="btn btn-primary submit" value="Save changes" />
         	</div>
         </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div>
+      </div>
+    </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.min.js"></script>
     <script type="text/javascript">
@@ -74,9 +73,16 @@
                     $("#view").html(html);
             });
 
-            $("#view").on("click", ".ajax", function(){
+            $("#view").on("click", ".view", function(){
                 $.get(this.href).then(function(data){
-                    $("#myDialog .modal-content").html(data);
+                    $("#myDialog .modal-title").html("<center>View Exercise</center>");
+                    $("#myDialog .modal-body").html("<h4>Exercise: "
+                    + data.exercisename + "</h4><h5>"+data.date+"</h5><h5>"
+                    + data.calories+"</h5><h5>"
+                    + data.minutes
+                    );
+                    $("#myDialog .modal-footer").html('<a href="?" class="btn btn-default" data-dismiss="modal" >Close</a>');
+                    
                     $("#myDialog").modal('show');
                 });
                 return false;
@@ -166,7 +172,7 @@
                                     <td>{{minutes}}</td>
                                     <td>
                          				<a href="/exercise/{{id}}" title="Edit" class="btn btn-primary btn-xs edit"><i class="glyphicon glyphicon-edit"></i></a>
-                          				<a href="" title="View" class="btn btn-info btn-xs ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
+                          				<a href="/exercise/{{id}}" title="View" class="btn btn-info btn-xs view"><i class="glyphicon glyphicon-eye-open"></i></a>
                           				<a href="/exercise/{{id}}" title="Delete" class="btn btn-danger btn-xs delete"><i class="glyphicon glyphicon-minus"></i></a>
                          			</td>
                                 </tr>

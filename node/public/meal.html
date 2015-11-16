@@ -43,30 +43,28 @@
 
     </div>
 
-    <!--      ### Tech Stuff ###      -->
     <div class="modal fade" id="myDialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-        <form class="form-horizontal" >
-          <div class="modal-header">
-            <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
-            <h4 class="modal-title" ></h4>
-          </div>
-        	<div class="modal-body">
-        	</div>
-        	<div class="modal-footer">
-        		<a href="?" class="btn btn-default" data-dismiss="modal" >Cancel </a>
-        		<input type="submit" name="submit" class="btn btn-primary submit" value="Save changes" />
-        	</div>
-        </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" >
+                    <div class="modal-header">
+                        <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
+                        <h4 class="modal-title" ></h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <a href="?" class="btn btn-default" data-dismiss="modal" >Close </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.min.js"></script>
     <script type="text/javascript">
         $(function(){
-            
             var editTemplate = Handlebars.compile($("#edit-tmpl").html());
             var indexTemplate = Handlebars.compile($("#index-tmpl").html());
 
@@ -75,9 +73,15 @@
                     $("#view").html(html);
             });
 
-            $("#view").on("click", ".ajax", function(){
+            $("#view").on("click", ".view", function(){
                 $.get(this.href).then(function(data){
-                    $("#myDialog .modal-content").html(data);
+                    $("#myDialog .modal-title").html("<center>View Meal</center>");
+                    $("#myDialog .modal-body").html("<h4>Meal: "
+                    + data.mealname + "</h4><h5>"+data.date+"</h5><h5>"
+                    + data.calories
+                    );
+                    $("#myDialog .modal-footer").html('<a href="?" class="btn btn-default" data-dismiss="modal" >Close</a>');
+                    
                     $("#myDialog").modal('show');
                 });
                 return false;
@@ -109,7 +113,7 @@
                 $self = $(this);
                 $.get(this.href).then(function(data){
                     $("#myDialog .modal-title").html("Delete a meal");
-                    $("#myDialog .modal-body").html("<h5>Are you sure you want to delete " + data.Name + "?</h5>");
+                    $("#myDialog .modal-body").html("<h5>Are you sure you want to delete " + data.mealname + " on "+data.date+"?</h5>");
                     $("#myDialog .submit").one('click', function(){
                         $.ajax({ url: '/meal/' + data.id, type: 'DELETE'})
                         .done(function(data){
@@ -144,6 +148,9 @@
            </td>
         </tr>
     </script>
+    <script type="text/template" id="view-tmp">
+        
+    </script>
     <script type="text/template" id="index-tmpl" >
         <div class="container">
             <div class="row">
@@ -164,7 +171,7 @@
                                     <td>{{calories}}</td>
                                     <td>
                          				<a href="/meal/{{id}}" title="Edit" class="btn btn-primary btn-xs edit"><i class="glyphicon glyphicon-edit"></i></a>
-                          				<a href="" title="View" class="btn btn-info btn-xs ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
+                          				<a href="/meal/{{id}}" title="View" class="btn btn-info btn-xs view"><i class="glyphicon glyphicon-eye-open"></i></a>
                           				<a href="/meal/{{id}}" title="Delete" class="btn btn-danger btn-xs delete"><i class="glyphicon glyphicon-minus"></i></a>
                          			</td>
                                 </tr>
