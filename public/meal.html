@@ -4,12 +4,11 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Fitness > Home</title>
+		<title>Fitness > Meals</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="/style/style.css">
 	</head>
-	
 	<body ng-app='app' ng-controller="meal as vm">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -39,62 +38,36 @@
 				</div>
 			</div>
 		</nav>
-        <mp-alert ></mp-alert>
-        <mp-panel title="vm.panel.title" body="vm.panel.body" confirm="vm.panel.confirm()"></mp-panel>
-        <div ng-include="'index-tmpl'" ></div>
-
+            <div ng-include="'index-tmpl'" ></div>
+            
     </div>
-    <!--Asdfasdf-->
-    <div class="modal fade" id="#myDialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="form-horizontal" >
-                    <div class="modal-header">
-                        <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
-                        <h4 class="modal-title" ></h4>
-                    </div>
-                    <div class="modal-body">
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <a href="?" class="btn btn-default" data-dismiss="modal" >Close </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="modal fade" id="myDialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="form-horizontal" >
-                    <div class="modal-header">
-                        <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
-                        <h4 class="modal-title" ></h4>
-                    </div>
-                    <div class="modal-body">
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <a href="?" class="btn btn-default" data-dismiss="modal" >Close </a>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <form class="form-horizontal" >
+          <div class="modal-header">
+            <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
+            <h4 class="modal-title" >{{vm.d.title}}</h4>
+          </div>
+        	<div class="modal-body">{{vm.d.body}}
+        	</div>
+        	<div class="modal-footer">
+        		<a href="?" class="btn btn-default" data-dismiss="modal" >Cancel </a>
+        		<input ng-click="vm.d.confirm()" type="submit" name="submit" class="btn btn-primary submit" value="Save changes" />
+        	</div>
+        </form>
         </div>
+      </div>
     </div>
-    <!--asdfdfd-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular.min.js"></script>
-    <script type="text/javascript" src="directives/alert.js"></script>
-    <script type="text/javascript" src="directives/panel.js"></script>
-    <script type="text/javascript">angular.module('app',['mplotkin.directives']);</script>
-    <script type="text/javascript" src="mealService.js"></script>
     <script type="text/javascript">
-        
-        angular.module('app')
-        .controller('meal', function($http, mealService){
+        angular.module('app',[])
+        .controller('meal', function($http){
             var self = this;
             
-            mealService.get()
+            $http.get("/meal")
             .success(function(data){
                 self.rows = data;
             });
@@ -113,13 +86,20 @@
                         row[this.name] = this.value || '';
                     }
                 });
-                location.reload();
+                $http.post('/meal/', row)
+                .success(function(data){
+                    data.isEditing = false;
+                    self.rows.push(data);
+                }).error(function(data){
+                    alert(data.code);
+                });
+                
             };
             self.edit = function(row, index){
                 row.isEditing = true;
             };
             self.save = function(row, index){
-                mealService.post(row)
+                $http.post('/meal/', row)
                 .success(function(data){
                     data.isEditing = false;
                     self.rows[index] = data;
@@ -128,11 +108,11 @@
                 });
             };
             self.delete = function(row, index){
-                self.panel = {
+                self.d = {
                     title: "Delete a meal",
-                    body: "Are you sure you want to delete " + row.mealname + "?",
+                    body: "Are you sure you want to delete " + row.Name + "?",
                     confirm: function(){
-                        mealService.delete(row.id)
+                        $http.delete('/meal/' + row.id)
                         .success(function(data){
                             self.rows.splice(index, 1);
                             $("#myDialog").modal('hide');
@@ -141,16 +121,10 @@
                         });
                     }
                 };
+                $("#myDialog").modal('show');
             };
-            function alert(msg){
-                self.msg = {
-                    type: 'alert-danger',
-                    body: msg
-                };
-            }
             
         });
-        
     </script>
     <script type="text/ng-template" id="index-tmpl" >
         <div class="container">
@@ -164,22 +138,28 @@
                         			<th>Date</th>
                         			<th>Calories</th>
                         		</tr>
-                            <tr ng-repeat="row in vm.rows">
-                                <td ng-if-start="!row.isEditing">{{row.mealname}}</td>
-                                <td>{{row.date}}</td>
-                                <td>{{row.calories}}</td>
-                                <td ng-if-end>
-                             	    <a ng-click="vm.edit(row,$index)" title="Edit" class="btn btn-primary btn-xs edit"><i class="glyphicon glyphicon-edit"></i></a>
-                              		<a ng-click="vm.view(row, $index)" title="View" class="btn btn-info btn-xs view"><i class="glyphicon glyphicon-eye-open"></i></a>
-                              		<a ng-click="vm.delete(row, $index)" title="Delete" class="btn btn-danger btn-xs delete"><i class="glyphicon glyphicon-minus"></i></a>
-                             	</td>
-                         	</th>
-                         	<td ng-if-start="row.isEditing"><input type="text" name="name" class="form-control" placeholder="Name" ng-model="row.mealname" /></td>
-                            <td><input type="text" name="date" class="form-control" placeholder="Date" ng-model="row.date" /></td>
-                            <td><input type="text" name="calories" class="form-control" placeholder="Calories" ng-model="row.calories" /></td>
-                            <td ng-if-end><input type="button" value="Submit" class="btn btn-primary submit" ng-click="vm.save(row, $index)"/>
-                            </td>
-                            </tr>
+                        	</th>
+                                <tr ng-repeat="row in vm.rows">
+                                    <td ng-if-start="!row.isEditing">{{row.mealname}}</td>
+                                    <td>{{row.date}}</td>
+                                    <td>{{row.calories}}</td>
+                                    <td ng-if-end>
+                                 	    <a ng-click="vm.edit(row,$index)" title="Edit" class="btn btn-primary btn-xs edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                  		<a ng-click="vm.view(row, $index)" title="View" class="btn btn-info btn-xs view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                  		<a ng-click="vm.delete(row, $index)" title="Delete" class="btn btn-danger btn-xs delete"><i class="glyphicon glyphicon-minus"></i></a>
+                                 	</td>
+                                 	<td ng-if-start="row.isEditing">
+ 	                        			<select class="form-control" name="mealname" ng-model="row.mealname">
+                            		    	<option>Breakfast</option>
+                            		      	<option>Lunch</option>
+                            		      	<option>Dinner</option>
+                            		    	<option>Snack</option>
+                            		  	</select>
+                        		  	</td>
+                                    <td><input type="text" name="date" class="form-control" placeholder="Date" ng-model="row.date" /></td>
+                                    <td><input type="text" name="calories" class="form-control" placeholder="Calories" ng-model="row.calories" /></td>
+                                    <td ng-if-end><input type="button" value="Submit" class="btn btn-primary submit" ng-click="vm.save(row, $index)"/></td>
+                                </tr>
                         </table>
             	    </div>
                 </div>
@@ -201,13 +181,13 @@
                             <div class="form-group">
                     		    <label class="control-label col-xs-3">Calories:</label>
                 		        <div class='col-xs-7'>
-                			        <input type="number" name="calories" class="form-control" placeholder="Calories" ng-model="row.calories" />
+                			        <input type="number" name="calories" class="form-control" placeholder="Calories" />
                 		        </div>
                 	       </div>
                         	<div class="form-group">
                         			<label class="control-label col-xs-3">Date:</label>
                         			<div class="col-xs-7">
-                        				<input type="date" name="date" class="form-control" placeholder="Date" ng-model="row.date" />
+                        				<input type="date" name="date" class="form-control" placeholder="Date"/>
                         			</div>
                         		</div>
                     	    <div class="form-group">
@@ -220,7 +200,7 @@
                 </div>
             </div>
         </div>
-        <div id='test'></div>
     </script>
+
   </body>
 </html>
