@@ -52,9 +52,8 @@ class Meal {
 					WHERE id = $row2[id]
 					";
 		}else{
-			$sql = "INSERT INTO meals
-					(mealname, date, created,calories)
-					VALUES ('$row2[mealname]', '$row2[date]', Now() , $row[calories]) ";				
+			$sql = 
+			;				
 		}
 		
 		$results = $conn->query($sql);
