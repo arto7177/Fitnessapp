@@ -1,8 +1,11 @@
 var express = require('express'),
     app = express();
 var bodyParser = require('body-parser');
+
 var meal = require("./Model/meal");
 var exercise= require("./Model/exercise");
+var unirest = require('unirest');
+
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,6 +48,15 @@ app.get("/meal", function(req, res){
       }
   })
   
+})
+.get("/meal/search/:term", function(req, res){
+    unirest.get("https://nutritionix-api.p.mashape.com/v1_1/search/" + req.params.term + "?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_serving_size_qty%2Cnf_serving_size_unit")
+    .header("X-Mashape-Key", "sHNppTKfrsmsh6PqLnnYTiuP2ao9p1YoSKBjsnzl9FUdLlX0XC")
+    .header("Accept", "application/json")
+    .end(function (result) {
+      res.send(result.body);
+    });
+    
 })
 .get("/exercise", function(req, res){
   
