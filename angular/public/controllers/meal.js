@@ -1,7 +1,9 @@
  angular.module('app')
     .controller('meal', function($http){
         var self = this;
-        
+        self.newrow = {};
+        self.term = null;
+        self.choices = [];
         $http.get("/meal")
         .success(function(data){
             self.rows = data;
@@ -45,7 +47,7 @@
         self.delete = function(row, index){
             self.d = {
                 title: "Delete a meal",
-                body: "Are you sure you want to delete " + row.Name + "?",
+                body: "Are you sure you want to delete " + row.mealname + "on " +row.date+"?",
                 confirm: function(){
                     $http.delete('/meal/' + row.id)
                     .success(function(data){
@@ -58,5 +60,15 @@
             };
             $("#myDialog").modal('show');
         };
-        
+        self.search = function(){
+            $http.get("/meal/search/" + self.term)
+            .success(function(data){
+                self.choices = data.hits;
+            });
+        };
+        self.choose = function(choice){
+            self.newrow.calories = choice.fields.nf_calories;
+            self.choices = [];
+            $('#mealcalc').modal('hide');
+        };
     });
