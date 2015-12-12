@@ -5,14 +5,14 @@ var bodyParser = require('body-parser');
 var meal = require("./Model/meal");
 var exercise= require("./Model/exercise");
 var unirest = require('unirest');
-
+var session=require('express-session')
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({secret:"test"}));
 
 app.get("/meal", function(req, res){
-  
-  meal.get(null, function(err, rows){
+  meal.get(null,req.session.id, function(err, rows){
     res.send(rows);
   })
     
@@ -30,6 +30,7 @@ app.get("/meal", function(req, res){
     res.status(500).send(errors);
     return;
   }
+  req.body.userid=req.session.id;
   meal.save(req.body, function(err, row){
       if(err){
         res.status(500).send(err);
@@ -60,7 +61,7 @@ app.get("/meal", function(req, res){
 })
 .get("/exercise", function(req, res){
   
-  exercise.get(null, function(err, rows){
+  exercise.get(null,req.session.id, function(err, rows){
     res.send(rows);
   })
     
@@ -78,6 +79,7 @@ app.get("/meal", function(req, res){
     res.status(500).send(errors);
     return;
   }
+  req.body.userid=req.session.id;
   exercise.save(req.body, function(err, row){
     res.send(row);
   })
