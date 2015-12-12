@@ -2,9 +2,9 @@ var mysql = require("mysql");
 
 module.exports =  {
     blank: function(){ return {} },
-    get: function(id, ret){
+    get: function(id,userid, ret){
         var conn = GetConnection();
-        var sql = 'SELECT * FROM meals ';
+        var sql = "SELECT * FROM meals where userid ='" +userid+"'";
         if(id){
           sql += " WHERE id = " + id;
         }
@@ -25,12 +25,12 @@ module.exports =  {
         var conn = GetConnection();
         if (row.id) {
 				  sql = " Update meals "
-							+ " Set mealname=?, date=? ,calories=?,updated=Now()"
+							+ " Set mealname=?, date=? ,calories=?,updated=Now(),userid=?"
 						  + " WHERE id = ? ";
 			  }else{
-				  sql = "INSERT INTO meals (mealname, date, created,calories) VALUES (?, ?, Now() , ?)"			
+				  sql = "INSERT INTO meals (mealname, date, created,calories,userid) VALUES (?, ?, Now() , ?,?)"			
 			  }
-        conn.query(sql, [row.mealname, row.date, row.calories,row.id],function(err,data){
+        conn.query(sql, [row.mealname, row.date, row.calories,row.userid,row.id],function(err,data){
           if(!err && !row.id){
             row.id = data.insertId;
           }
