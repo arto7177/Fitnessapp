@@ -1,4 +1,4 @@
-
+    
     <div class="modal fade" id="myDialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -43,6 +43,15 @@
 			</div>
 		</div>
     <div class="container">
+        <div class='row'>
+            Search Meal Name:
+            <select class="s2list " ng-model="s2listSelected" ng-change="vm.msearch(s2listSelected)"  >
+                	<option>Breakfast</option>
+    		      	<option>Lunch</option>
+    		      	<option>Dinner</option>
+    		    	<option>Snack</option>
+			</select>
+        </div>
         <div class="row">
         	<div class="col-md-7">
         		<div class="cardbg">
@@ -118,7 +127,11 @@
                 </div>
             </div>
         </div>
-        <div class='row'>
-
-        </div>
+        
     </div>
+    	<script tye="text/javascript">
+		$(document).ready(function() {
+		  $(".s2list").select2();
+		});
+	</script>
+
