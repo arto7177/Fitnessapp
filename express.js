@@ -6,6 +6,7 @@ var meal = require("./Model/meal");
 var exercise= require("./Model/exercise");
 var unirest = require('unirest');
 var session=require('express-session')
+var profile = require('profile');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -95,5 +96,24 @@ app.get("/meal", function(req, res){
   })
   
 })
+.post("/login", function(req, res){
+    unirest.get("https://graph.facebook.com/me?access_token=" + req.body.access_token + "&fields=id,name")
+    .end(function (result) {
+        var fbUser = req.session.fbUser = JSON.parse(result.body);
+        fbUser.access_token = req.body.access_token;
+    });
+})
+.get("/fbUser", function(req, res){
+    res.send(req.session.fbUser);
+})
+.get("/user", function(req, res){
+    res.send(req.session.user);
+})
+.get("/profile", function(req, res){
+  profile.get(function(err, rows){
+    res.send(rows);
+  })
+    
+});
 
 app.listen(process.env.PORT);

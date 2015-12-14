@@ -28,11 +28,27 @@
 					</ul>
 					<ul class="nav navbar-nav pull-right">
 						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings <span class="glyphicon glyphicon-cog"></span></a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="">Settings <span class="glyphicon glyphicon-cog"></span></a>
 							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="">Profile <span class="glyphicon glyphicon-user"></span></a></li>
+								<li><a href="#/profile">Profile <span class="glyphicon glyphicon-user"></span></a></li>
 								<li class="divider"></li>
-								<li><a href="#">Sign In <span class="glyphicon glyphicon-log-out"></span></a></li>
+								<li>
+									<!--<div ng-controller="user as user" >
+									<button ng-click="user.login()" class="btn">Login with facebook</button>
+									</div>-->
+								<div ng-controller="user as user" >
+				                  <div ng-if="user.fbUser">
+				                      <a href="http://www.facebook.com/{{user.fbUser.id}}">
+				                          <img src="https://graph.facebook.com/{{user.fbUser.id}}/picture" />
+				                          {{user.fbUser.name}} 
+				                      </a>
+				                  </div>
+				                  <div ng-if="!user.fbUser">
+				                      <button ng-click="user.login()" class="btn">Login with facebook</button>
+				                  </div>
+				                  
+				              </div>
+				              	</li>
 							</ul>
 						</li>
 					</ul>
@@ -43,11 +59,9 @@
 			<div ng-view ></div>
 
 
-    
+    <script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-route.min.js"></script>
-    <!--<script type="text/javascript" src="directives/alert.js"></script>
-    <script type="text/javascript" src="directives/panel.js"></script>-->
     <script type="text/javascript">
         angular.module('app',['ngRoute'])
         .config(function($routeProvider){
@@ -64,10 +78,64 @@
                 templateUrl: 'views/exercise-details.html',
                 controller: 'exerciseDetails', controllerAs: 'vm'
               }).
+              when('/profile', {
+                templateUrl: 'views/profile.html',
+                controller: 'user', controllerAs: 'vm'
+              }).
               otherwise({
                 redirectTo: '/meal'
               });
-        });
+        }).
+	    service('facebook',function($q, $http){
+	        return{
+	            login: function(){
+	                var deferred = $q.defer();
+	                FB.login(function(response) {
+	                    FB.api('/me', function(fbUser){
+	                        deferred.resolve(fbUser);
+	                    });
+	                }, {scope: 'public_profile,email'});
+	                return deferred.promise;
+	            },
+	            getUser: function(){
+	                var deferred = $q.defer();
+	                
+	                FB.init({
+	                    appId      : '541409782680385',
+	                    cookie     : true,  
+	                    xfbml      : true,  
+	                    version    : 'v2.5' 
+	                });
+	                FB.getLoginStatus(function(response) {
+	                    if(response.status === 'connected'){
+	                        //response.authResponse.accessToken
+	                            FB.api('/me', function(fbUser){
+	                                deferred.resolve(fbUser);
+	                            });
+	                            $http.post('/login', { access_token: response.authResponse.accessToken });
+	                    }else{
+	                        
+	                    }
+	                });
+	                
+	                return deferred.promise;
+	            }
+	        };
+	    })
+	    .controller('user', function(facebook){
+	        var self = this;
+	        facebook.getUser().then(function(fbUser){
+	            self.fbUser = fbUser;
+	        });
+	        self.status = "Not Checked Yet.";
+	        
+	        self.login = function(){
+	            facebook.login().then(function(fbUser){
+	                self.fbUser = fbUser;
+	                
+	            });
+	        };
+	    });
         
     </script>
     <script type="text/javascript" src="controllers/meal.js"></script>
