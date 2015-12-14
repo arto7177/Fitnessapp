@@ -58,5 +58,5 @@
             };
             $("#myDialog").modal('show');
         };
-        
+
     });

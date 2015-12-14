@@ -1,3 +1,4 @@
+
  angular.module('app')
     .controller('meal', function($http){
         var self = this;
@@ -71,4 +72,15 @@
             self.choices = [];
             $('#mealcalc').modal('hide');
         };
+        self.msearch=function(item){
+            console.log("/meal/msearch/"+item);
+        $http.get("/meal/msearch/"+item)
+            .success(function(data){
+            self.rows = data;
+            
+            });
+            
+        };
+
+        
     });

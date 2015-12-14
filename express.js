@@ -6,23 +6,28 @@ var meal = require("./Model/meal");
 var exercise= require("./Model/exercise");
 var unirest = require('unirest');
 var session=require('express-session')
-var profile = require('profile');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({secret:"test"}));
 
 app.get("/meal", function(req, res){
-  meal.get(null,req.session.id, function(err, rows){
+  meal.get(null,req.session.id,null, function(err, rows){
     res.send(rows);
   })
     
 })
 .get("/meal/:id", function(req, res){
   
-  meal.get(req.params.id, function(err, rows){
+  meal.get(req.params.id,null,null, function(err, rows){
     res.send(rows[0]);
   })
+})
+.get("/meal/msearch/:term", function(req, res){
+  meal.get(null,req.session.id,req.params.term, function(err, rows){
+    res.send(rows);
+  })
+
   
 })
 .post("/meal", function(req, res){
