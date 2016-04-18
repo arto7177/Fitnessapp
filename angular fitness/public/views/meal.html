@@ -1,0 +1,137 @@
+    
+    <div class="modal fade" id="myDialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <form class="form-horizontal" >
+          <div class="modal-header">
+            <a href="?" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></a>
+            <h4 class="modal-title" >{{vm.d.title}}</h4>
+          </div>
+        	<div class="modal-body">{{vm.d.body}}
+        	</div>
+        	<div class="modal-footer">
+        		<a href="?" class="btn btn-default" data-dismiss="modal" >Cancel </a>
+        		<input ng-click="vm.d.confirm()" type="submit" name="submit" class="btn btn-primary submit" value="Save changes" />
+        	</div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div id="mealcalc" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Meal Search</h4>
+					</div>
+					<div class="modal-body">
+					    <center>
+		                <input type="text" ng-model="vm.term"/>
+                        <button class="btn btn-search" ng-click="vm.search()" >Search</button>
+                        </center>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="choice in vm.choices" data-dismiss="modal" ng-click="vm.choose(choice)">
+                                {{choice.fields.item_name}} -Serving Size:{{choice.fields.nf_serving_size_qty}} {{choice.fields.nf_serving_size_unit}}-{{choice.fields.nf_calories}} calories
+                            </li>
+                        </ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    <div class="container">
+        <div class='row'>
+            Search Meal Name:
+            <select class="s2list " ng-model="s2listSelected" ng-change="vm.msearch(s2listSelected)"  >
+                	<option>Breakfast</option>
+    		      	<option>Lunch</option>
+    		      	<option>Dinner</option>
+    		    	<option>Snack</option>
+			</select>
+        </div>
+        <div class="row">
+        	<div class="col-md-7">
+        		<div class="cardbg">
+        		    
+                    <table class="table table-bordered">
+                    	<thead>
+                    		<tr>
+                    			<th>Meal</th>
+                    			<th>Date</th>
+                    			<th>Calories</th>
+                    		</tr>
+                    	</thead>
+                            <tr ng-repeat="row in vm.rows">
+                                <td ng-if-start="!row.isEditing">{{row.mealname}}</td>
+                                <td>{{row.date}}</td>
+                                <td>{{row.calories}}</td>
+                                <td ng-if-end>
+                             	    <a ng-click="vm.edit(row,$index)" title="Edit" class="btn btn-primary btn-xs edit"><i class="glyphicon glyphicon-edit"></i></a>
+                              		<a ng-click="vm.view(row, $index)" title="View" class="btn btn-info btn-xs view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                              		<a ng-click="vm.delete(row, $index)" title="Delete" class="btn btn-danger btn-xs delete"><i class="glyphicon glyphicon-minus"></i></a>
+                             	</td>
+                             	<td ng-if-start="row.isEditing">
+                         			<select class="form-control" name="mealname" ng-model="row.mealname">
+                        		    	<option>Breakfast</option>
+                        		      	<option>Lunch</option>
+                        		      	<option>Dinner</option>
+                        		    	<option>Snack</option>
+                        		  	</select>
+                    		  	</td>
+                                <td><input type="text" name="date" class="form-control" placeholder="Date" ng-model="row.date" /></td>
+                                <td><input type="text" name="calories" class="form-control" placeholder="Calories" ng-model="row.calories" /></td>
+                                <td ng-if-end><input type="button" value="Submit" class="btn btn-primary submit" ng-click="vm.save(row, $index)"/></td>
+                            </tr>
+                    </table>
+        	    </div>
+            </div>
+            <div class="col-md-5">
+                <div class="cardbg">
+                	<h3 class="text-center">Add Meal</h3>
+            		<form id='newMeal' class="form-horizontal">
+                        <div class="form-group">
+                		    <label class="control-label col-xs-3">Meal:</label>
+                		    <div class="col-xs-7">
+                    			<select class="form-control" name="mealname">
+                    		    	<option>Breakfast</option>
+                    		      	<option>Lunch</option>
+                    		      	<option>Dinner</option>
+                    		    	<option>Snack</option>
+                    		  	</select>
+                		    </div>
+                	    </div>
+                        <div class="form-group">
+                		    <label class="control-label col-xs-3">Calories:</label>
+            		        <div class='col-xs-7'>
+            			        <input type="number" name="calories" class="form-control" placeholder="Calories" ng-model="vm.newrow.calories"/>
+            		        </div>
+            	       </div>
+                    	<div class="form-group">
+                			<label class="control-label col-xs-3">Date:</label>
+                			<div class="col-xs-7">
+                				<input type="date" name="date" class="form-control" placeholder="Date"/>
+                			</div>
+                		</div>
+                		<center>
+                		        To estimate a meal click <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#mealcalc">Here</button>
+                		</center> 
+                	    <div class="form-group">
+                            <div class='col-xs-offset-3 col-xs-9'>
+                                 <button type="button" class="btn btn-primary" ng-click="vm.create()"><small><span class="glyphicon glyphicon-plus"></span></small> Add Meal</button>
+                    		</div>
+                    	</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    	<script tye="text/javascript">
+		$(document).ready(function() {
+		  $(".s2list").select2();
+		});
+	</script>
+
